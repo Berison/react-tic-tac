@@ -1,4 +1,4 @@
-import Board from "./layout/Board/Board";
+import TicTacInner from "./layout/TicTacInner/TicTacInner";
 import Header from "./layout/Header/Header";
 
 function App() {
@@ -6,7 +6,7 @@ function App() {
     <div className="main-fullscreen">
       <Header />
       <main className="w-full md:w-xl pl-4 pr-4">
-        <Board />
+        <TicTacInner />
       </main>
     </div>
   );

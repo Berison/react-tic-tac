@@ -1,4 +1,4 @@
-import type { PlayerType } from "../../../../shared/types/player";
+import type { PlayerType } from "../../../../../shared/types/player";
 import Player from "./Player";
 
 export default function Players() {
