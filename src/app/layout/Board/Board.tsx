@@ -1,47 +1,27 @@
-import { useState } from "react";
+import type { GameBoard } from "../../../shared/types/board.type";
 
-type PlayerSymbol = "X" | "O";
-type CellValue = PlayerSymbol | null;
-type GameBoard = CellValue[][];
+type BoardProps = {
+  onSelectSquare: (rowIndex: number, colIndex: number) => void;
+  board: GameBoard;
+};
 
-const initialGameBoard: GameBoard = [
-  [null, null, null],
-  [null, null, null],
-  [null, null, null],
-];
-
-export default function Board() {
-  const [gameBoard, updateGameBoard] = useState(initialGameBoard);
-
-  const handleSelectSquare = (rowIndex: number, colIndex: number) => {
-    updateGameBoard((prevGameBoard) => {
-      const updatedBoard = [
-        ...prevGameBoard.map((innerArray) => [...innerArray]),
-      ];
-      updatedBoard[rowIndex][colIndex] = "X";
-      return updatedBoard;
-    });
-  };
-
+export default function Board({ onSelectSquare, board }: BoardProps) {
   return (
-    <ol id="game-board" className="grid grid-cols-3 gap-2 w-fit mx-auto mt-5">
-      {gameBoard.map((row, rowIndex) => (
-        <li key={rowIndex}>
-          <ol>
-            {row.map((playerSymbol, colIndex) => (
-              <li key={colIndex}>
-                <button
-                  type="button"
-                  className="square-button"
-                  onClick={() => handleSelectSquare(rowIndex, colIndex)}
-                >
-                  {playerSymbol}
-                </button>
-              </li>
-            ))}
-          </ol>
-        </li>
-      ))}
+    <ol id="game-board" className="grid grid-cols-3 gap-3 w-fit mx-auto mt-5">
+      {board.flatMap((row, rowIndex) =>
+        row.map((playerSymbol, colIndex) => (
+          <li key={`${rowIndex}-${colIndex}`}>
+            <button
+              type="button"
+              className="square-button"
+              onClick={() => onSelectSquare(rowIndex, colIndex)}
+              disabled={playerSymbol !== null}
+            >
+              {playerSymbol}
+            </button>
+          </li>
+        ))
+      )}
     </ol>
   );
 }
